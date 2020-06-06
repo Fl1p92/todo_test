@@ -12,6 +12,7 @@ coreapi==2.3.3            # via drf-yasg
 coreschema==0.0.4         # via coreapi, drf-yasg
 decorator==4.4.2          # via ipython, traitlets
 django-environ==0.4.5     # via -r requirements.in
+django-extensions==2.2.9  # via -r requirements.in
 django==2.2.13            # via -r requirements.in, djangorestframework, drf-yasg
 djangorestframework==3.11.0  # via -r requirements.in, drf-yasg
 drf-yasg==1.17.1          # via -r requirements.in
@@ -37,6 +38,7 @@ pexpect==4.8.0            # via ipython
 pickleshare==0.7.5        # via ipython
 pip-tools==5.2.0          # via -r requirements.in
 prompt-toolkit==3.0.5     # via ipython
+psycopg2-binary==2.8.5    # via -r requirements.in
 ptyprocess==0.6.0         # via pexpect
 pycodestyle==2.6.0        # via flake8, flake8-print
 pyflakes==2.2.0           # via flake8
@@ -47,7 +49,7 @@ pytz==2020.1              # via django
 requests==2.23.0          # via -r requirements.in, coreapi
 ruamel.yaml.clib==0.2.0   # via ruamel.yaml
 ruamel.yaml==0.16.10      # via drf-yasg
-six==1.15.0               # via drf-yasg, flake8-print, packaging, pip-tools, python-dateutil, traitlets
+six==1.15.0               # via django-extensions, drf-yasg, flake8-print, packaging, pip-tools, python-dateutil, traitlets
 sqlparse==0.3.1           # via django
 text-unidecode==1.3       # via faker
 traitlets==4.3.3          # via ipython

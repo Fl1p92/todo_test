@@ -17,10 +17,12 @@ DEBUG = env.bool('DEBUG', default=False)
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
 
+AUTH_USER_MODEL = 'users.User'
 
 # Application definition
 
 INSTALLED_APPS = [
+    # Django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -28,7 +30,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Third party packages
+    'django_extensions',
+    'rest_framework',
+    'drf_yasg',
+
+    # Project apps
     'apps.core.apps.CoreConfig',
+    'apps.users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
