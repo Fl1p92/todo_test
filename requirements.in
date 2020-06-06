@@ -1,0 +1,12 @@
+django<3.0
+django-environ
+djangorestframework
+drf-yasg
+ipdb
+ipython
+factory-boy
+flake8-print
+gunicorn
+pip-tools
+psycopg2-binary
+requests

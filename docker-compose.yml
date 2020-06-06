@@ -1,0 +1,53 @@
+version: "3.7"
+
+volumes:
+  local_postgres_data: {}
+  static_content: {}
+
+services:
+  backend:
+    build: .
+    container_name: backend
+    command: /bin/sh ./commands/wsgi/${SERVER}.sh
+    ports:
+      - "${WSGI_PORT}:${WSGI_PORT}"
+    env_file: .env
+    depends_on:
+      - postgres
+    volumes:
+      - .:/srv/todo_test
+      - static_content:/srv/todo_test/static_content
+    stdin_open: true
+    tty: true
+    restart: always
+    user: ${SYSTEM_USER}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION}
+    container_name: postgres
+    env_file: .env
+    restart: always
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data
+
+  nginx:
+    image: nginx:1.17.4
+    container_name: nginx
+    command: /bin/bash /etc/nginx/start_nginx.sh
+    volumes:
+      - ./nginx/proxy_params:/etc/nginx/conf.d/proxy_params
+      - static_content:/etc/nginx/static_content/
+      - ./nginx/template.conf:/etc/nginx/template.conf
+      - ./commands/start_nginx.sh:/etc/nginx/start_nginx.sh
+    env_file: .env
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+
