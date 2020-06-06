@@ -1,6 +1,7 @@
 django<3.0
 django-environ
 django-extensions
+djangorestframework-simplejwt
 djangorestframework
 drf-yasg
 ipdb

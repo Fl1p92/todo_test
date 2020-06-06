@@ -116,3 +116,26 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# djangorestframework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+# Documentation with Swagger/Redoc
+GENERATE_AUTO_DOCS = env.bool('GENERATE_AUTO_DOCS', default=False)
+
+# When logging into swagger, remember to add the auth header type
+# For example: 'Bearer eyJ0eXAiOi...truncated_token...rP9muTz1p9raw1Y'
+SWAGGER_SETTINGS = {
+   'SECURITY_DEFINITIONS': {
+      'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+      }
+   },
+   'USE_SESSION_AUTH': False
+}

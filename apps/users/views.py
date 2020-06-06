@@ -8,15 +8,23 @@ from .serializers import UserSerializer
 class UserViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
     """
     list:
+    List of all users
+
     Returns information for all users.
 
     retrieve:
+    Retrieve user profile
+
     Returns information for current user.
 
     update:
+    Update user profile
+
     Changes information for current user.
 
     partial_update:
+    Partial update user profile
+
     Changes partly information for current user.
     """
 
