@@ -1,6 +1,7 @@
 django<3.0
 django-environ
 django-extensions
+django-filter
 djangorestframework-simplejwt
 djangorestframework
 drf-yasg

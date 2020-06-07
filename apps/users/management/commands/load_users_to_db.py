@@ -7,6 +7,10 @@ from apps.users.serializers import UserSerializer
 
 
 class Command(BaseCommand):
+    """
+    This command is intended for initial database loading.
+    When you call again, nothing will happen, because the username is not unique.
+    """
     test_password = 'VerySecurityPassword123'
     server_url = 'https://jsonplaceholder.typicode.com/users'
     help = f"""Loads users info to the db from the {server_url}.
@@ -30,4 +34,5 @@ class Command(BaseCommand):
 
         # Add password for created users
         User.objects.bulk_update(users, ['password'])
-        self.stdout.write(self.style.SUCCESS(f'Created {len(response_data)} users with passwords and additional data.'))
+        if users:
+            self.stdout.write(self.style.SUCCESS(f'Created {len(users)} users with passwords and additional data.'))

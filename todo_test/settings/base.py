@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     # Project apps
     'apps.core.apps.CoreConfig',
     'apps.users.apps.UsersConfig',
+    'apps.tasks.apps.TasksConfig',
 ]
 
 MIDDLEWARE = [
@@ -119,9 +120,12 @@ STATIC_URL = '/static/'
 
 # djangorestframework
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
+    'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ],
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ]
 }
 
 # Documentation with Swagger/Redoc

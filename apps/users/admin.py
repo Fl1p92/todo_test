@@ -2,11 +2,17 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 
+from apps.tasks.models import Task
 from .models import User, Address, Company, Coordinates
 
 
 class AddressInline(admin.TabularInline):
     model = Address
+
+
+class TasksInline(admin.TabularInline):
+    model = Task
+    extra = 1
 
 
 @admin.register(User)
@@ -22,7 +28,7 @@ class UserAdmin(UserAdmin):
         }),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
-    inlines = [AddressInline]
+    inlines = [AddressInline, TasksInline]
 
 
 class CoordinatesInline(admin.TabularInline):
