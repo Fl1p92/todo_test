@@ -30,7 +30,7 @@ class UserViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.Updat
 
     permission_classes = (IsAuthenticated,)
     serializer_class = UserSerializer
-    queryset = User.objects.all()
+    queryset = User.objects.select_related('company').prefetch_related('address__geo')
 
     def get_object(self):
         return self.request.user

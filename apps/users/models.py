@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.utils.functional import cached_property
 
 
 class User(AbstractUser):
@@ -11,6 +10,9 @@ class User(AbstractUser):
     phone = models.CharField(max_length=100, blank=True, default='')
     website = models.CharField(max_length=100, blank=True, default='')
     company = models.ForeignKey('Company', on_delete=models.SET_NULL, related_name='users', blank=True, null=True)
+
+    class Meta:
+        ordering = ['id']
 
     def __str__(self):
         return f'[{self.id}] {self.name}'
@@ -26,11 +28,11 @@ class Address(models.Model):
     city = models.CharField(max_length=100)
     zipcode = models.CharField(max_length=20)
 
-    def __str__(self):
-        return f"{self.user}'s address [{self.id}]"
-
     class Meta:
         verbose_name_plural = 'Address'
+
+    def __str__(self):
+        return f"{self.user}'s address [{self.id}]"
 
 
 class Coordinates(models.Model):
@@ -53,8 +55,8 @@ class Company(models.Model):
     catchPhrase = models.CharField(max_length=100)
     bs = models.CharField(max_length=100)
 
-    def __str__(self):
-        return f'[{self.id}] {self.name}'
-
     class Meta:
         verbose_name_plural = 'Companies'
+
+    def __str__(self):
+        return f'[{self.id}] {self.name}'
