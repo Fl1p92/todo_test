@@ -54,5 +54,12 @@ class TaskViewSet(viewsets.ModelViewSet):
     filterset_fields = ['completed']
 
     def get_queryset(self):
-        queryset = Task.objects.filter(user=self.request.user)
+        queryset = Task.objects.all()
+
+        # A little trick to fix an exception that occurs during schema generation
+        if getattr(self, 'swagger_fake_view', False):
+            return queryset
+
+        # Filter by request user
+        queryset = queryset.filter(user=self.request.user)
         return queryset

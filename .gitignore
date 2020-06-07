@@ -5,6 +5,7 @@ __pycache__/
 
 .idea
 .coverage
+htmlcov/
 .pytest_cache/
 .env
 db.sqlite3
