@@ -1,0 +1,16 @@
+coverage
+django<3.0
+django-environ
+django-extensions
+django-filter
+djangorestframework-simplejwt
+djangorestframework
+drf-yasg
+ipdb
+ipython
+factory-boy
+flake8-print
+gunicorn
+pip-tools
+psycopg2-binary
+requests

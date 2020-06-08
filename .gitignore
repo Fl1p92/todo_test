@@ -1,0 +1,16 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+.idea
+.coverage
+htmlcov/
+.pytest_cache/
+.env
+db.sqlite3
+
+# Static dir
+!static_content/
+static_content/*
+!static_content/.gitkeep
