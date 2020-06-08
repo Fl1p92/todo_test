@@ -17,9 +17,9 @@ class TasksInline(admin.TabularInline):
 
 @admin.register(User)
 class UserAdmin(UserAdmin):
-    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'website', 'company')
+    list_display = ('username', 'email', 'name', 'is_staff', 'website', 'company')
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups', 'company')
-    search_fields = ('username', 'first_name', 'last_name', 'email', 'company')
+    search_fields = ('username', 'name', 'email', 'company')
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         (_('Personal info'), {'fields': ('name', 'email', 'phone', 'website', 'company')}),

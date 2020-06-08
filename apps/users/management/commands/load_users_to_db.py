@@ -18,9 +18,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # Get data from site
-        with requests.Session() as session:
-            data = session.get(self.server_url)
-            response_data = data.json()
+        data = requests.get(self.server_url)
+        response_data = data.json()
         self.stdout.write(self.style.MIGRATE_HEADING(f'Parsed {len(response_data)} objects.'))
 
         # Deserialize data into objects

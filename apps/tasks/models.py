@@ -13,4 +13,4 @@ class Task(models.Model):
         ordering = ['id']
 
     def __str__(self):
-        return f"{self.user}'s task [{self.id}]"
+        return f"User ID: {self.user_id}, Task ID: {self.id}"

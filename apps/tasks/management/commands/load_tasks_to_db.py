@@ -1,8 +1,10 @@
 import requests
 
 from django.core.management.base import BaseCommand
+from django.http import HttpRequest
 
 from apps.tasks.serializers import TaskSerializer
+from apps.users.models import User
 
 
 class Command(BaseCommand):
@@ -16,18 +18,21 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # Get data from site
-        with requests.Session() as session:
-            data = session.get(self.server_url)
-            response_data = data.json()
+        data = requests.get(self.server_url)
+        response_data = data.json()
         self.stdout.write(self.style.MIGRATE_HEADING(f'Parsed {len(response_data)} objects.'))
 
         # Deserialize data into objects
         tasks = []
         for task_data in response_data:
-            task_data['user'] = task_data.pop('userId')
-            serializer = TaskSerializer(data=task_data)
-            if serializer.is_valid():
-                task = serializer.save()
-                tasks.append(task)
+            user = User.objects.filter(id=task_data.pop('userId')).first()
+            if user is not None:
+                # request object with user is obligated in TaskSerializer
+                request = HttpRequest()
+                request.user = user
+                serializer = TaskSerializer(data=task_data, context={'request': request})
+                if serializer.is_valid():
+                    task = serializer.save()
+                    tasks.append(task)
 
         self.stdout.write(self.style.SUCCESS(f"Created new {len(tasks)} user's tasks."))

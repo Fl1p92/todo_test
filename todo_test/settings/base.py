@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'drf_yasg',
 
     # Project apps
-    'apps.core.apps.CoreConfig',
     'apps.users.apps.UsersConfig',
     'apps.tasks.apps.TasksConfig',
 ]

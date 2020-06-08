@@ -32,7 +32,7 @@ class Address(models.Model):
         verbose_name_plural = 'Address'
 
     def __str__(self):
-        return f"{self.user}'s address [{self.id}]"
+        return f"User ID: {self.user_id}, Address ID: {self.id}"
 
 
 class Coordinates(models.Model):

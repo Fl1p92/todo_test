@@ -14,11 +14,14 @@ class TaskAPIViewTest(APITestCase):
 
     def setUp(self):
         self.count = 10
+        # Create 10 tasks for random users
         for _ in range(self.count):
             TaskFactory()
         self.test_user = UserFactory()
+        # Create 19 tasks for test user
         for _ in range(self.count * 2 - 1):
             TaskFactory(user=self.test_user)
+        # Create 1 more testing task for test user
         self.test_task = TaskFactory(user=self.test_user)
         self.list_create_url = reverse('todo-list')
         self.access_token = self.get_access_token()
@@ -39,8 +42,8 @@ class TaskAPIViewTest(APITestCase):
         # all tasks
         response = self.client.get(self.list_create_url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), self.count * 2)
-        self.assertEqual(Task.objects.count(), self.count * 3)
+        self.assertEqual(len(response.data), self.count * 2)  # 20 for test user
+        self.assertEqual(Task.objects.count(), self.count * 3)  # 30 for all users (include test user)
 
         # filtered by completed=true
         response = self.client.get(self.list_create_url, data={'completed': 'true'}, format='json')
@@ -54,8 +57,8 @@ class TaskAPIViewTest(APITestCase):
 
         response = self.client.post(self.list_create_url, data=data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(Task.objects.count(), self.count * 3 + 1)
-        self.assertEqual(Task.objects.filter(user=self.test_user).count(), self.count * 2 + 1)
+        self.assertEqual(Task.objects.count(), self.count * 3 + 1)  # 30 + 1
+        self.assertEqual(Task.objects.filter(user=self.test_user).count(), self.count * 2 + 1)  # 20 + 1
         self.assertEqual(
             Task.objects.filter(user=self.test_user).values_list('title', 'completed').last(),
             (data['title'], data['completed'])
@@ -97,9 +100,9 @@ class TaskAPIViewTest(APITestCase):
 
     def test_task_delete(self):
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.access_token}')
-        self.assertEqual(Task.objects.count(), self.count * 3)
+        self.assertEqual(Task.objects.count(), self.count * 3)  # 30 tasks
 
         response = self.client.delete(reverse('todo-detail', kwargs={'pk': self.test_task.id}), format='json')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(Task.objects.count(), self.count * 3 - 1)
-        self.assertEqual(Task.objects.filter(user=self.test_user).count(), self.count * 2 - 1)
+        self.assertEqual(Task.objects.count(), self.count * 3 - 1)  # 29 tasks
+        self.assertEqual(Task.objects.filter(user=self.test_user).count(), self.count * 2 - 1)  # 19 tasks for our user

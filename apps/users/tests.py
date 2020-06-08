@@ -14,9 +14,10 @@ class UserAPIViewTest(APITestCase):
 
     def setUp(self):
         self.count = 10
-        # Filled db by self.count entries of coordinates, address, company and users data
+        # Filled db by 10 entries of coordinates, address, company and users data
         for _ in range(self.count):
             CoordinatesFactory()
+        # Create 1 more user with company, address and coordinates
         self.test_user = CoordinatesFactory().address.user
         self.list_url = reverse('users-list')
         self.detail_url = reverse('users-detail')
@@ -37,8 +38,8 @@ class UserAPIViewTest(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.access_token}')
         response = self.client.get(self.list_url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), self.count + 1)
-        self.assertEqual(User.objects.count(), self.count + 1)
+        self.assertEqual(len(response.data), self.count + 1)  # 11 users
+        self.assertEqual(User.objects.count(), self.count + 1)  # 11 users
 
     def test_retrieve_user_profile(self):
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.access_token}')
@@ -153,16 +154,16 @@ class UserAPIViewTest(APITestCase):
             },
         }
 
-        self.assertEqual(User.objects.count(), self.count + 1)
-        self.assertEqual(Company.objects.count(), self.count + 1)
-        self.assertEqual(Address.objects.count(), self.count + 1)
-        self.assertEqual(Coordinates.objects.count(), self.count + 1)
+        self.assertEqual(User.objects.count(), self.count + 1)  # 11 users
+        self.assertEqual(Company.objects.count(), self.count + 1)  # 11 companies
+        self.assertEqual(Address.objects.count(), self.count + 1)  # 11 addresses
+        self.assertEqual(Coordinates.objects.count(), self.count + 1)  # 11 coordinates
 
         serializer = UserSerializer(data=raw_data)
         self.assertTrue(serializer.is_valid())
         serializer.save()
 
-        self.assertEqual(User.objects.count(), self.count + 2)
-        self.assertEqual(Company.objects.count(), self.count + 2)
-        self.assertEqual(Address.objects.count(), self.count + 2)
-        self.assertEqual(Coordinates.objects.count(), self.count + 2)
+        self.assertEqual(User.objects.count(), self.count + 2)  # 12 users
+        self.assertEqual(Company.objects.count(), self.count + 2)  # 12 companies
+        self.assertEqual(Address.objects.count(), self.count + 2)  # 12 addresses
+        self.assertEqual(Coordinates.objects.count(), self.count + 2)  # 12 coordinates
