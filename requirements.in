@@ -1,5 +1,6 @@
 coverage
 django<3.0
+django-cors-headers
 django-environ
 django-extensions
 django-filter

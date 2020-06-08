@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     # Third party packages
     'django_extensions',
     'rest_framework',
+    'corsheaders',
     'drf_yasg',
 
     # Project apps
@@ -43,6 +44,8 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    # Django CORS
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -142,3 +145,6 @@ SWAGGER_SETTINGS = {
    },
    'USE_SESSION_AUTH': False
 }
+
+# Django CORS headers
+CORS_ORIGIN_WHITELIST = env.list('CORS_ORIGIN_WHITELIST', default=[])
