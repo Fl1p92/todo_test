@@ -1,5 +1,5 @@
 coverage
-django<3.0
+django<4.0
 django-environ
 django-extensions
 django-filter
